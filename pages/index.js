@@ -1,3 +1,4 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSreset";
@@ -5,30 +6,13 @@ import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 
-const StyledBanner = styled.header`
-  margin-top: 56px;
-  text-align: center;
-  background-color: #000;
-  height: 230px;
-  img {
-    width: 100%;
-    height: 230px;
-    object-fit: cover;
-  }
-`;
-
-function Banner() {
-  return (
-    <StyledBanner>
-      <img src={config.banner} alt="Banner principal" />
-    </StyledBanner>
-  )
-}
 
 function HomePage() {
   const estilosDaHomePage = { 
     //backgroundColor: "red" 
   };
+
+const [valorDoFiltro, setValorDoFiltro] = React.useState("");
 
   /* console.log(config.playlists); */
 
@@ -42,10 +26,12 @@ function HomePage() {
         flex: 1,
         // backgroundColor: "red",
       }}>
-        <Banner />
-        <Menu />
+        {/* <Banner /> */}
+        {/* Drop Drilling */}
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
         <Header />
         <TimeLine 
+          searchValue={valorDoFiltro}
           playlists={config.playlists}>Conteúdo
         </TimeLine>
       </div>
@@ -61,6 +47,7 @@ export default HomePage;
 } */
 
 const StyledHeader = styled.div`
+    margin-top: 56px;
   img {
     width: 80px;
     height: 80px;
@@ -75,10 +62,16 @@ const StyledHeader = styled.div`
   }
 `;
 
+const StyledBanner = styled.div`
+  background-color: blue;
+  background-image: url(${({banner}) => banner});
+  height: 340px;
+`;
+
 function Header() {
   return (
     <StyledHeader>
-      {/* <img src="" /> */}
+      <StyledBanner banner={config.banner}/>
       <section className="user-info">
         <img src={`https://github.com/${config.github}.png`} />
         <div>
@@ -90,7 +83,7 @@ function Header() {
   );
 }
 
-function TimeLine(props) {
+function TimeLine({searchValue, ...props}) {
   /* console.log("Dentro do componente", props.playlists); */
   const playlistNames = Object.keys(props.playlists);
 
@@ -101,16 +94,23 @@ function TimeLine(props) {
         //console.log(playlistName);
         //console.log(videos);
         return (
-          <section>
+          <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map((video) => {
-                return (
-                  <a href={video.url}>
-                    <img src={video.thumb} />
-                    <span>{video.title}</span>
-                  </a>
-                );
+              {videos
+                .filter((video) => {
+                  const titleNormalized = video.title.toLowerCase();
+                  const searchValueNormalized = searchValue.toLowerCase();
+
+                  return titleNormalized.includes(searchValueNormalized);
+                })
+                .map((video) => {
+                  return (
+                    <a key={video.url} href={video.url}>
+                      <img src={video.thumb} />
+                      <span>{video.title}</span>
+                    </a>
+                  );
               })}
             </div>
           </section>
