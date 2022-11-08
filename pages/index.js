@@ -4,6 +4,27 @@ import { CSSReset } from "../src/components/CSSreset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
+
+const StyledBanner = styled.header`
+  margin-top: 56px;
+  text-align: center;
+  background-color: #000;
+  height: 230px;
+  img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+  }
+`;
+
+function Banner() {
+  return (
+    <StyledBanner>
+      <img src={config.banner} alt="Banner principal" />
+    </StyledBanner>
+  )
+}
+
 function HomePage() {
   const estilosDaHomePage = { 
     //backgroundColor: "red" 
@@ -13,6 +34,7 @@ function HomePage() {
 
   return (
     <>
+      
       <CSSReset />
       <div style={{
         display: "flex",
@@ -20,6 +42,7 @@ function HomePage() {
         flex: 1,
         // backgroundColor: "red",
       }}>
+        <Banner />
         <Menu />
         <Header />
         <TimeLine 
@@ -44,7 +67,6 @@ const StyledHeader = styled.div`
     border-radius: 50%;
   }
   .user-info {
-    margin-top: 50px;
     display: flex;
     align-items: center;
     width: 100%;
