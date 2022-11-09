@@ -24,8 +24,7 @@ export const StyledTimeline = styled.div`
     overflow: hidden;
     padding: 16px;
     div {
-      
-      width: calc(100vw - 16px * 4);
+      width: calc(100vw - 18px * 5);
       display: grid;
       grid-gap: 16px;
       grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
@@ -42,6 +41,22 @@ export const StyledTimeline = styled.div`
           color: ${({ theme }) => theme.textColorBase || "#222222"};
         }
       }
+    }
+    div::-webkit-scrollbar {
+    height: 8px;
+    }
+
+    div::-webkit-scrollbar-track {
+        background: #e6e9ed;
+    }
+
+    div::-webkit-scrollbar-thumb {
+        background: #cbd2dc;
+        width: 50px;
+    }
+
+    div::-webkit-scrollbar-thumb:hover {
+        background: #a6b3c6;
     }
   }
 `;

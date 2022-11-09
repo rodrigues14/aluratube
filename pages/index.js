@@ -63,9 +63,12 @@ const StyledHeader = styled.div`
 `;
 
 const StyledBanner = styled.div`
-  background-color: blue;
+  background-color: black;
   background-image: url(${({banner}) => banner});
   height: 340px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 `;
 
 function Header() {
